@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Demographic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<script>
+    getParameters();
+    function getParameters() {
+        let urlString = window.location.href;
+        let paramString = urlString.split('?')[1];
+        let queryString = new URLSearchParams(paramString);
+        for(let pair of queryString.entries()) {
+            alert(pair[1])
+        }
+    }
+</script>
+<body>
+<div class="w3-container" align="center">
+
+    <h3>Demographic</h3>
+    <a th:href="@{/}">
+        <button class="w3-bar-item w3-button w3-teal" style="width:33.3%">
+            Home
+        </button>
+    </a>
+    <a th:href="@{/addnew}">
+        <button class="w3-bar-item w3-button w3-teal" style="width:33.3%">
+            Add New
+        </button>
+    </a>
+
+    <p>Users List</p>
+    <table class="w3-table w3-bordered">
+        <tr>
+            <th>Name</th>
+            <th>PPS Number</th>
+            <th>Date of Birth</th>
+            <th>Mobile Phone Number</th>
+        </tr>
+
+        <tr th:each="user:${user}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.pps}"></td>
+            <td th:text="${user.dob}"></td>
+            <td th:text="${user.phone}"></td>
+        </tr>
+
+
+    </table>
+    <div th:if="${user.isEmpty()}">
+        <div class="alert alert-danger" th:text="${msg}">
+        </div>
+    </div>
+
+
+
+</div>
+</body>
+</html>
