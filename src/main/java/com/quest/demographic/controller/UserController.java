@@ -1,11 +1,11 @@
 package com.quest.demographic.controller;
 
 import com.quest.demographic.dto.UserDTO;
-import com.quest.demographic.model.User;
 import com.quest.demographic.service.UserService;
 import com.quest.demographic.utils.CommonConstant;
 import com.quest.demographic.utils.CommonUtils;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
+
 @Controller
 public class UserController {
 
-    private final UserService userService;
-    private final CommonUtils commonUtils;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CommonUtils commonUtils;
 
-    public UserController(UserService userService, CommonUtils commonUtils) {
-        this.userService = userService;
-        this.commonUtils = commonUtils;
-    }
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute UserDTO user, BindingResult bindingResult, Model model) {
@@ -40,7 +39,7 @@ public class UserController {
     @GetMapping("/viewall")
     public String viewall(Model model) {
 
-        List<User> users = userService.viewall();
+        List<UserDTO> users = userService.viewall();
         if (users.isEmpty())
             model.addAttribute("msg", CommonConstant.NO_RECORD_FOUND);
 
